@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         output.write(htmlCode + cssCode + jsCode);
         output.close();
 
-        // Save code to localStorage
+        //Save code to localStorage
         localStorage.setItem('htmlCode', htmlCode);
         localStorage.setItem('cssCode', cssEditor.getValue());
         localStorage.setItem('jsCode', jsEditor.getValue());
@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         updateOutput();
     }
+    // updateOutput();
 
     loadCode();
 
@@ -59,4 +60,15 @@ document.addEventListener('DOMContentLoaded', function() {
     cssEditor.on('change', updateOutput);
     jsEditor.on('change', updateOutput);
 });
-
+function clearOutput() {
+    outputFrame.Html ="";
+  }
+// Save code
+function saveCode() {
+    const code = editor.getValue();
+    const blob = new Blob([code], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'code.txt';
+    a.click();
+}
