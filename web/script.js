@@ -59,16 +59,37 @@ document.addEventListener('DOMContentLoaded', function() {
     htmlEditor.on('change', updateOutput);
     cssEditor.on('change', updateOutput);
     jsEditor.on('change', updateOutput);
+
+    // Save Code Function
+    document.getElementById('saveCode').addEventListener('click', function() {
+        const htmlCode = htmlEditor.getValue();
+        const cssCode = cssEditor.getValue();
+        const jsCode = jsEditor.getValue();
+
+        saveFile('index.html', htmlCode);
+        saveFile('styles.css', cssCode);
+        saveFile('script.js', jsCode);
+    });
+
+    function saveFile(filename, content) {
+        const blob = new Blob([content], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+    }
+
+
+
 });
+// Clear Output Function
 function clearOutput() {
-    outputFrame.Html ="";
-  }
-// Save code
-function saveCode() {
-    const code = editor.getValue();
-    const blob = new Blob([code], { type: 'text/plain' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'code.txt';
-    a.click();
-}
+    const outputFrame = document.getElementById('output');
+    const output = outputFrame.contentDocument;
+    output.open();
+    output.write('');
+    output.close();
+    console.log("clearOutput")
+};
+
+  
